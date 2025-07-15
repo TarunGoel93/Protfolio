@@ -19,7 +19,7 @@
             font-size: 18px;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
             color: #d4af37;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
             line-height: 1.8;
         }
 
@@ -460,7 +460,7 @@
         .flipster-container {
             position: relative;
             margin-top: 3rem;
-            overflow: visible;
+            overflow: visible; /* Default for larger screens */
             height: 550px; /* Default height for smaller cards */
             perspective: 1200px;
             width: 100%;
@@ -576,14 +576,6 @@
             margin-bottom: 1.5rem; /* Increased margin */
         }
 
-        .skill-category {
-            font-family: 'MedievalSharp', cursive;
-            font-size: 1.6rem;
-            color: #d4af37;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
         .skill-list {
             display: flex;
             flex-wrap: wrap;
@@ -633,7 +625,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start; /* Changed from space-between to flex-start */
         }
 
         .project-card:hover {
@@ -662,14 +654,14 @@
             font-family: 'MedievalSharp', cursive;
             font-size: 1.8rem; /* Increased font size */
             color: #d4af37;
-            margin-bottom: 1.5rem; /* Increased margin */
+            margin-bottom: 1rem; /* Reduced from 1.5rem */
             position: relative;
             z-index: 2;
         }
 
         .project-description {
             color: #e0e0e0;
-            margin-bottom: 0.5rem; /* Reduced from 1rem */
+            margin-bottom: 0.25rem; /* Further reduced from 0.5rem */
             position: relative;
             z-index: 2;
             line-height: 1.8; /* Increased line height */
@@ -681,7 +673,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
-            margin-bottom: 0.5rem; /* Reduced from 1rem */
+            margin-bottom: 0.25rem; /* Further reduced from 0.5rem */
             position: relative;
             z-index: 2;
         }
@@ -701,6 +693,7 @@
             gap: 1.5rem; /* Increased gap */
             position: relative;
             z-index: 2;
+            margin-top: 1rem; /* Added margin to separate from tech tags */
         }
 
         .project-link {
@@ -734,7 +727,6 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            cursor: pointer;
             /* Removed overflow-y: auto; */
         }
 
@@ -1064,101 +1056,6 @@
             color: #d4af37;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .hero-title {
-                font-size: 3rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.5rem;
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 3rem;
-            }
-
-            .portrait-frame {
-                width: 280px;
-                height: 350px;
-            }
-
-            .nav-container {
-                padding: 0 1rem;
-            }
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            .theme-toggle {
-                right: 1rem;
-                padding: 1rem;
-            }
-
-            .social-links {
-                gap: 1.5rem;
-            }
-
-            .social-link {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-
-            .flipster-container {
-                height: 950px; /* Adjusted for mobile */
-                padding: 0 20px;
-            }
-
-            .flipster-item {
-                width: 380px; /* Adjusted for mobile */
-                height: 900px; /* Adjusted for mobile */
-                margin-left: -190px; /* Adjusted for new mobile width */
-                margin-top: -450px; /* Adjusted for new mobile height */
-            }
-
-            /* Mobile flipster adjustments */
-            /* These will also be controlled by GSAP */
-            .flipster-item.left-1 {
-                /* transform: translateX(-260px) translateZ(-140px) rotateY(35deg) scale(0.8) scaleX(-1); */
-            }
-
-            .flipster-item.left-2 {
-                /* transform: translateX(-435px) translateZ(-235px) rotateY(55deg) scale(0.65) scaleX(-1); */
-            }
-
-            .flipster-item.left-3 {
-                /* transform: translateX(-555px) translateZ(-330px) rotateY(70deg) scale(0.5) scaleX(-1); */
-            }
-
-            .flipster-item.right-1 {
-                /* transform: translateX(260px) translateZ(-140px) rotateY(-35deg) scale(0.8) scaleX(-1); */
-            }
-
-            .flipster-item.right-2 {
-                /* transform: translateX(435px) translateZ(-235px) rotateY(-55deg) scale(0.65) scaleX(-1); */
-            }
-
-            .flipster-item.right-3 {
-                /* transform: translateX(555px) translateZ(-330px) rotateY(-70deg) scale(0.5) scaleX(-1); */
-            }
-        }
-
         /* Scroll Animations */
         .fade-in {
             opacity: 0;
@@ -1234,6 +1131,582 @@
 
         .pulse-animation {
             animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* --- Responsive Adjustments --- */
+
+        /* Tablet and smaller desktops (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            body {
+                font-size: 16px;
+            }
+
+            .harry-potter-title {
+                font-size: 3.5rem;
+            }
+
+            .harry-potter-heading {
+                font-size: 1.8rem;
+            }
+
+            .harry-potter-subheading {
+                font-size: 1.5rem;
+            }
+
+            p, .about-text p {
+                font-size: 1.1rem;
+            }
+
+            .hero-description {
+                font-size: 1.2rem !important;
+            }
+
+            .hero-subtitle {
+                font-size: 1.6rem !important;
+            }
+
+            .nav-container {
+                padding: 0 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+                padding: 0.6rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 4rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-description {
+                margin-bottom: 3rem;
+            }
+
+            .cta-button {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .section {
+                padding: 8rem 0;
+            }
+
+            .section-title {
+                font-size: 3rem;
+                margin-bottom: 4rem;
+            }
+
+            .about-content {
+                gap: 3rem;
+            }
+
+            .portrait-frame {
+                width: 300px;
+                height: 400px;
+            }
+
+            .about-text h3 {
+                font-size: 2rem;
+            }
+
+            .flipster-container {
+                height: 500px; /* Adjusted for slightly smaller default cards */
+                padding: 0 30px;
+            }
+
+            .flipster-item {
+                width: 350px; /* Adjusted for slightly smaller default cards */
+                height: 450px; /* Adjusted for slightly smaller default cards */
+                margin-left: -175px;
+                margin-top: -225px;
+            }
+
+            #projects .flipster-container {
+                height: 900px; /* Adjusted for projects section on tablets */
+            }
+
+            #projects .flipster-item {
+                width: 400px; /* Adjusted for projects cards on tablets */
+                height: 850px; /* Adjusted for projects cards on tablets */
+                margin-left: -200px;
+                margin-top: -425px;
+            }
+
+            .project-card {
+                padding: 2rem; /* Adjusted padding */
+            }
+
+            .project-title {
+                font-size: 1.6rem;
+                margin-bottom: 0.8rem; /* Adjusted margin */
+            }
+
+            .project-description {
+                font-size: 1rem;
+                margin-bottom: 0.2rem; /* Adjusted margin */
+            }
+
+            .project-tech {
+                gap: 0.6rem;
+                margin-bottom: 0.2rem; /* Adjusted margin */
+            }
+
+            .tech-tag {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .project-links {
+                gap: 1rem;
+                margin-top: 0.8rem; /* Adjusted margin */
+            }
+
+            .project-link {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .skill-scroll, .honor-card, .cert-card {
+                padding: 1.8rem;
+            }
+
+            .skill-category, .honor-title, .cert-title {
+                font-size: 1.4rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .skill-item {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .honor-description, .cert-card p {
+                font-size: 1rem;
+            }
+
+            .cert-link {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .resume-section {
+                padding: 6rem 0;
+            }
+
+            .resume-button {
+                padding: 1.5rem 3rem;
+                font-size: 1.1rem;
+                gap: 1rem;
+            }
+
+            .resume-icon {
+                font-size: 1.8rem;
+            }
+
+            .contact-form {
+                padding: 3rem;
+            }
+
+            .form-group {
+                margin-bottom: 2rem;
+            }
+
+            .form-group label {
+                font-size: 1rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .submit-button {
+                padding: 1.2rem;
+                font-size: 1.1rem;
+            }
+
+            .social-links {
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+
+            .social-link {
+                width: 60px;
+                height: 60px;
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Mobile Responsive (max-width: 768px) */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            .nav-links {
+                display: none; /* Hidden by default, shown by JS toggle */
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .hero-description {
+                font-size: 1.1rem !important;
+                margin-bottom: 2.5rem;
+            }
+
+            .section {
+                padding: 6rem 0;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .portrait-frame {
+                width: 250px;
+                height: 320px;
+            }
+
+            .about-text h3 {
+                font-size: 1.8rem;
+            }
+
+            .about-text p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .theme-toggle {
+                right: 1rem;
+                padding: 1rem;
+            }
+
+            .social-links {
+                gap: 1.5rem;
+            }
+
+            .social-link {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+            }
+
+            .flipster-container {
+                height: 850px; /* Adjusted for mobile */
+                padding: 0 15px;
+                overflow: hidden; /* Hide overflow on mobile */
+            }
+
+            .flipster-item {
+                width: calc(100% - 30px); /* Make width responsive to container */
+                height: 800px; /* Adjusted for mobile */
+                margin-left: calc(-50% + 15px); /* Center item dynamically */
+                margin-top: -400px; /* Adjusted for new mobile height */
+            }
+
+            #projects .flipster-container {
+                height: 900px; /* Adjusted for projects section on mobile */
+            }
+
+            #projects .flipster-item {
+                width: calc(100% - 30px); /* Make width responsive to container */
+                height: 850px; /* Adjusted for projects cards on mobile */
+                margin-left: calc(-50% + 15px); /* Center item dynamically */
+                margin-top: -425px;
+            }
+
+            .project-card {
+                padding: 1.8rem; /* Adjusted padding */
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+                margin-bottom: 0.8rem; /* Adjusted margin */
+            }
+
+            .project-description {
+                font-size: 0.95rem;
+                line-height: 1.7;
+                margin-bottom: 0.2rem; /* Adjusted margin */
+            }
+
+            .project-tech {
+                gap: 0.5rem;
+                margin-bottom: 0.2rem; /* Adjusted margin */
+            }
+
+            .tech-tag {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.8rem;
+            }
+
+            .project-links {
+                flex-direction: column;
+                gap: 0.8rem;
+                margin-top: 0.8rem; /* Adjusted margin */
+            }
+
+            .project-link {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .skill-scroll, .honor-card, .cert-card {
+                padding: 1.5rem;
+            }
+
+            .skill-category, .honor-title, .cert-title {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .skill-list {
+                gap: 0.8rem;
+            }
+
+            .skill-item {
+                padding: 0.6rem 0.9rem;
+                font-size: 0.85rem;
+            }
+
+            .honor-description, .cert-card p {
+                font-size: 0.95rem;
+            }
+
+            .cert-link {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .resume-section {
+                padding: 5rem 0;
+            }
+
+            .resume-button {
+                padding: 1.2rem 2.5rem;
+                font-size: 1rem;
+                gap: 0.8rem;
+            }
+
+            .resume-icon {
+                font-size: 1.6rem;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group label {
+                font-size: 0.95rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            .submit-button {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .social-links {
+                margin-top: 2.5rem;
+            }
+        }
+
+        /* Smaller Mobile Devices (max-width: 480px) */
+        @media (max-width: 480px) {
+            .harry-potter-title {
+                font-size: 2.5rem;
+            }
+
+            .harry-potter-heading {
+                font-size: 1.3rem;
+            }
+
+            .harry-potter-subheading {
+                font-size: 1.2rem;
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .hero-description {
+                font-size: 1rem !important;
+            }
+
+            .cta-button {
+                padding: 0.8rem 1.8rem;
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .about-content {
+                gap: 1.5rem;
+            }
+
+            .portrait-frame {
+                width: 200px;
+                height: 280px;
+            }
+
+            .about-text h3 {
+                font-size: 1.5rem;
+            }
+
+            .about-text p {
+                font-size: 0.9rem;
+            }
+
+            .flipster-container {
+                height: 750px; /* Adjusted for smaller mobile */
+                padding: 0 10px;
+                overflow: hidden; /* Hide overflow on smaller mobile */
+            }
+
+            .flipster-item {
+                width: calc(100% - 20px); /* Make width responsive to container */
+                height: 700px; /* Adjusted for smaller mobile */
+                margin-left: calc(-50% + 10px); /* Center item dynamically */
+                margin-top: -350px;
+            }
+
+            #projects .flipster-container {
+                height: 800px; /* Adjusted for projects section on smaller mobile */
+            }
+
+            #projects .flipster-item {
+                width: calc(100% - 20px); /* Make width responsive to container */
+                height: 750px; /* Adjusted for projects cards on smaller mobile */
+                margin-left: calc(-50% + 10px); /* Center item dynamically */
+                margin-top: -375px;
+            }
+
+            .project-card {
+                padding: 1.2rem; /* Adjusted padding */
+            }
+
+            .project-title {
+                font-size: 1.3rem;
+                margin-bottom: 0.6rem; /* Adjusted margin */
+            }
+
+            .project-description {
+                font-size: 0.9rem;
+                margin-bottom: 0.15rem; /* Adjusted margin */
+            }
+
+            .tech-tag {
+                font-size: 0.75rem;
+            }
+
+            .project-links {
+                margin-top: 0.6rem; /* Adjusted margin */
+                gap: 0.6rem;
+            }
+
+            .project-link {
+                font-size: 0.85rem;
+            }
+
+            .skill-category, .honor-title, .cert-title {
+                font-size: 1.1rem;
+            }
+
+            .skill-item {
+                font-size: 0.8rem;
+            }
+
+            .honor-description, .cert-card p {
+                font-size: 0.9rem;
+            }
+
+            .cert-link {
+                font-size: 0.85rem;
+            }
+
+            .resume-button {
+                padding: 1rem 2rem;
+                font-size: 0.9rem;
+            }
+
+            .resume-icon {
+                font-size: 1.4rem;
+            }
+
+            .contact-form {
+                padding: 1.5rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                font-size: 0.9rem;
+            }
+
+            .submit-button {
+                font-size: 0.95rem;
+            }
+
+            .social-link {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -1624,7 +2097,7 @@
                                 Recognized for outstanding contributions to the machine learning community
                             </p>
                             <a href="https://github.com/TarunGoel93/TarunGoel93/blob/main/K1.jpg" target="_blank" class="cert-link">View Credential</a>
-                        </div>
+                            </div>
                     </div>
 
                 </div>
@@ -1770,35 +2243,29 @@
                 'right-far': { x: 1150, z: -600, rotationY: -80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
             };
 
-            // Adjust for mobile responsiveness
+            // Mobile position map: only center card is visible, others are hidden
+            const mobileHiddenPositionMap = {
+                'center': { x: 0, z: 0, rotationY: 0, scale: 1, scaleX: 1, opacity: 1, zIndex: 10 },
+                'left-1': { x: 0, z: 0, rotationY: 0, scale: 0.01, scaleX: 1, opacity: 0, zIndex: 1 },
+                'left-2': { x: 0, z: 0, rotationY: 0, scale: 0.01, scaleX: 1, opacity: 0, zIndex: 1 },
+                'left-3': { x: 0, z: 0, rotationY: 0, scale: 0.01, scaleX: 1, opacity: 0, zIndex: 1 },
+                'left-far': { x: 0, z: 0, rotationY: 0, scale: 0.01, scaleX: 1, opacity: 0, zIndex: 1 },
+                'right-1': { x: 0, z: 0, rotationY: 0, scale: 0.01, scaleX: 1, opacity: 0, zIndex: 1 },
+                'right-2': { x: 0, z: 0, rotationY: 0, scale: 0.01, scaleX: 1, opacity: 0, zIndex: 1 },
+                'right-3': { x: 0, z: 0, rotationY: 0, scale: 0.01, scaleX: 1, opacity: 0, zIndex: 1 },
+                'right-far': { x: 0, z: 0, rotationY: 0, scale: 0.01, scaleX: 1, opacity: 0, zIndex: 1 },
+            };
+
+            let currentPositionMap;
             const isMobile = window.innerWidth <= 768;
-            const mobileDefaultPositionMap = {
-                'center': { x: 0, z: 0, rotationY: 0, scale: 1, scaleX: 1, opacity: 1, zIndex: 10 },
-                'left-1': { x: -260, z: -140, rotationY: 35, scale: 0.8, scaleX: -1, opacity: 0.8, zIndex: 8 },
-                'left-2': { x: -435, z: -235, rotationY: 55, scale: 0.65, scaleX: -1, opacity: 0.6, zIndex: 6 },
-                'left-3': { x: -555, z: -330, rotationY: 70, scale: 0.5, scaleX: -1, opacity: 0.4, zIndex: 4 },
-                'left-far': { x: -615, z: -415, rotationY: 80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
-                'right-1': { x: 260, z: -140, rotationY: -35, scale: 0.8, scaleX: -1, opacity: 0.8, zIndex: 8 },
-                'right-2': { x: 435, z: -235, rotationY: -55, scale: 0.65, scaleX: -1, opacity: 0.6, zIndex: 6 },
-                'right-3': { x: 555, z: -330, rotationY: -70, scale: 0.5, scaleX: -1, opacity: 0.4, zIndex: 4 },
-                'right-far': { x: 615, z: -415, rotationY: -80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
-            };
 
-            const mobileProjectsPositionMap = {
-                'center': { x: 0, z: 0, rotationY: 0, scale: 1, scaleX: 1, opacity: 1, zIndex: 10 },
-                'left-1': { x: -320, z: -160, rotationY: 35, scale: 0.85, scaleX: -1, opacity: 0.8, zIndex: 8 },
-                'left-2': { x: -520, z: -260, rotationY: 55, scale: 0.7, scaleX: -1, opacity: 0.6, zIndex: 6 },
-                'left-3': { x: -670, z: -360, rotationY: 70, scale: 0.55, scaleX: -1, opacity: 0.4, zIndex: 4 },
-                'left-far': { x: -750, z: -450, rotationY: 80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
-                'right-1': { x: 320, z: -160, rotationY: -35, scale: 0.85, scaleX: -1, opacity: 0.8, zIndex: 8 },
-                'right-2': { x: 520, z: -260, rotationY: -55, scale: 0.7, scaleX: -1, opacity: 0.6, zIndex: 6 },
-                'right-3': { x: 670, z: -360, rotationY: -70, scale: 0.55, scaleX: -1, opacity: 0.4, zIndex: 4 },
-                'right-far': { x: 750, z: -450, rotationY: -80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
-            };
-
-            const currentPositionMap = (wrapper.id === 'projects-flipster') 
-                ? (isMobile ? mobileProjectsPositionMap : projectsPositionMap)
-                : (isMobile ? mobileDefaultPositionMap : defaultPositionMap);
+            if (isMobile) {
+                currentPositionMap = mobileHiddenPositionMap;
+            } else if (wrapper.id === 'projects-flipster') {
+                currentPositionMap = projectsPositionMap;
+            } else {
+                currentPositionMap = defaultPositionMap;
+            }
 
             // Disable pointer events on all items at the start of the animation
             gsap.set(items, { pointerEvents: 'none' });
