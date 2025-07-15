@@ -1,0 +1,2329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarun Goel - Magical Developer Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Text:wght@400;600&family=Uncial+Antiqua&family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #d4af37;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* Harry Potter Themed Fonts */
+        .harry-potter-title {
+            font-family: 'Uncial Antiqua', cursive;
+            font-size: 4.5rem;
+            letter-spacing: 2px;
+        }
+
+        .harry-potter-heading {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+        }
+
+        .harry-potter-subheading {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* Improved Text Readability */
+        p, .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #e0e0e0;
+        }
+
+        .hero-description {
+            font-size: 1.4rem !important;
+            line-height: 1.8;
+            color: #c0c0c0;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem !important;
+            color: #d4af37;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f4d03f;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 1s ease-out;
+        }
+
+        .marauders-map {
+            width: 300px;
+            height: 200px;
+            background: #2d1b0e;
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            animation: mapPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes mapPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .map-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><path d="M10 50 Q 100 20, 200 50 T 290 50" stroke="%23d4af37" stroke-width="2" fill="none" opacity="0.3"/><path d="M20 100 Q 80 70, 150 100 T 280 100" stroke="%23d4af37" stroke-width="2" fill="none" opacity="0.3"/><path d="M30 150 Q 120 120, 220 150 T 270 150" stroke="%23d4af37" stroke-width="2" fill="none" opacity="0.3"/></svg>');
+            animation: mapReveal 3s ease-in-out infinite;
+        }
+
+        @keyframes mapReveal {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.4rem;
+            color: #d4af37;
+            text-align: center;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-family: 'Uncial Antiqua', cursive;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-decoration: none;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            transition: all 0.4s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.9);
+            transform: scale(1.08);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            position: relative;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: #d4af37;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Uncial Antiqua', cursive;
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+            opacity: 0;
+            transform: translateY(50px);
+            background: linear-gradient(45deg, #d4af37, #f4d03f, #d4af37);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            color: #d4af37;
+        }
+
+        .hero-description {
+            font-size: 1.4rem;
+            margin-bottom: 3.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            color: #c0c0c0;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.7);
+            background: linear-gradient(45deg, #f4d03f, #d4af37);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 2.5rem;
+            color: rgba(212, 175, 55, 0.4);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(180deg); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 10rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-family: 'Uncial Antiqua', cursive;
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 5rem;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            position: relative;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(212, 175, 55, 0.8); }
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            transform: translateX(-50%);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .portrait-frame {
+            width: 350px;
+            height: 450px;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            border: 10px solid #d4af37;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+            margin: 0 auto;
+            transition: all 0.4s ease;
+        }
+
+        .portrait-frame:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.6);
+        }
+
+        .portrait-frame::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            background: linear-gradient(135deg, #2d1b0e 0%, #4a3c28 100%);
+            border-radius: 8px;
+        }
+
+        .portrait-frame::after {
+            content: '🧙‍♂️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            z-index: 2;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #e0e0e0;
+        }
+
+        .about-text h3 {
+            font-family: 'MedievalSharp', cursive;
+            color: #d4af37;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+
+        .about-text p {
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        /* 3D Flipster Carousel Container */
+        .flipster-container {
+            position: relative;
+            margin-top: 3rem;
+            overflow: visible;
+            height: 550px; /* Default height for smaller cards */
+            perspective: 1200px;
+            width: 100%;
+            padding: 0 50px;
+        }
+
+        .flipster-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        .flipster-item {
+            position: absolute;
+            width: 380px; /* Default width for smaller cards */
+            height: 480px; /* Default height for smaller cards */
+            transform-style: preserve-3d;
+            cursor: pointer;
+            left: 50%;
+            top: 50%;
+            margin-left: -190px; /* Adjusted for default width */
+            margin-top: -240px; /* Adjusted for default height */
+            pointer-events: auto;
+        }
+
+        /* Center item (active) */
+        .flipster-item.center {
+            /* These will be controlled by GSAP */
+        }
+
+        /* Left items with mirror effect */
+        .flipster-item.left-1 {
+            /* These will be controlled by GSAP */
+        }
+
+        .flipster-item.left-2 {
+            /* These will be controlled by GSAP */
+        }
+
+        .flipster-item.left-3 {
+            /* These will be controlled by GSAP */
+        }
+
+        .flipster-item.left-far {
+            /* These will be controlled by GSAP */
+        }
+
+        /* Right items with mirror effect */
+        .flipster-item.right-1 {
+            /* These will be controlled by GSAP */
+        }
+
+        .flipster-item.right-2 {
+            /* These will be controlled by GSAP */
+        }
+
+        .flipster-item.right-3 {
+            /* These will be controlled by GSAP */
+        }
+
+        .flipster-item.right-far {
+            /* These will be controlled by GSAP */
+        }
+
+        /* Skills Section */
+        .skill-scroll, .honor-card, .cert-card {
+            padding: 2rem; /* Increased padding for better content display */
+        }
+
+        .skill-scroll {
+            background: linear-gradient(135deg, #2d1b0e 0%, #4a3c28 100%);
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Removed overflow-y: auto; */
+        }
+
+        .skill-scroll:hover {
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+            transform: scale(1.02);
+        }
+
+        .skill-scroll::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
+            transition: all 0.8s ease;
+        }
+
+        .skill-scroll:hover::before {
+            left: 100%;
+        }
+
+        .skill-category, .honor-title, .cert-title {
+            font-size: 1.6rem; /* Increased font size */
+            margin-bottom: 1.5rem; /* Increased margin */
+        }
+
+        .skill-category {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.6rem;
+            color: #d4af37;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .skill-item {
+            background: rgba(212, 175, 55, 0.15);
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            color: #d4af37;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: rgba(212, 175, 55, 0.25);
+            transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Projects Section - Enhanced for full information display */
+        #projects .flipster-container {
+            height: 1000px; /* Increased height for projects section */
+        }
+
+        #projects .flipster-item {
+            width: 450px; /* Increased width for projects cards */
+            height: 950px; /* Increased height for projects cards */
+            margin-left: -225px; /* Adjusted for new projects width */
+            margin-top: -475px; /* Adjusted for new projects height */
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 3px solid rgba(212, 175, 55, 0.4);
+            border-radius: 20px;
+            padding: 2.5rem; /* Increased padding */
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.3);
+            transform: scale(1.02);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.8rem; /* Increased font size */
+            color: #d4af37;
+            margin-bottom: 1.5rem; /* Increased margin */
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-description {
+            color: #e0e0e0;
+            margin-bottom: 0.5rem; /* Reduced from 1rem */
+            position: relative;
+            z-index: 2;
+            line-height: 1.8; /* Increased line height */
+            font-size: 1.1rem; /* Increased font size */
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem; /* Reduced from 1rem */
+            position: relative;
+            z-index: 2;
+        }
+
+        .tech-tag {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding: 0.5rem 1rem; /* Increased padding */
+            border-radius: 20px;
+            font-size: 0.9rem; /* Increased font size */
+            font-weight: 600;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1.5rem; /* Increased gap */
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-link {
+            padding: 0.8rem 1.5rem; /* Increased padding */
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem; /* Increased font size */
+        }
+
+        .project-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Achievements Section */
+        .honor-card {
+            background: linear-gradient(135deg, #2d1b0e 0%, #4a3c28 100%);
+            border: 3px solid rgba(212, 175, 55, 0.6);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            /* Removed overflow-y: auto; */
+        }
+
+        .honor-card:hover {
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+            transform: scale(1.02);
+        }
+
+        .honor-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
+            transition: all 0.8s ease;
+        }
+
+        .honor-card:hover::before {
+            left: 100%;
+        }
+
+        .honor-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.6rem;
+            color: #d4af37;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .honor-description {
+            color: #e0e0e0;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+        }
+
+        /* Certifications Section */
+        .cert-card {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            border: 4px solid #d4af37;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Removed overflow-y: auto; */
+        }
+
+        .cert-card:hover {
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.5);
+            transform: scale(1.02);
+        }
+
+        .cert-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.25), transparent);
+            transition: all 0.8s ease;
+        }
+
+        .cert-card:hover::before {
+            left: 100%;
+        }
+
+        .cert-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.6rem;
+            color: #d4af37;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cert-link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            font-size: 1rem;
+        }
+
+        .cert-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Resume Section */
+        .resume-section {
+            text-align: center;
+            padding: 8rem 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+        }
+
+        .resume-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem 4rem;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            font-size: 1.3rem;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resume-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.8s ease;
+        }
+
+        .resume-button:hover::before {
+            left: 100%;
+        }
+
+        .resume-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
+        }
+
+        .resume-icon {
+            font-size: 2rem;
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 4rem;
+            border-radius: 25px;
+            border: 3px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            border-radius: 15px;
+            color: #d4af37;
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            transform: scale(1.02);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(212, 175, 55, 0.6);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.8s ease;
+        }
+
+        .submit-button:hover::before {
+            left: 100%;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 3px solid rgba(212, 175, 55, 0.4);
+            border-radius: 50%;
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 1.8rem;
+            transition: all 0.4s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-8px) scale(1.15);
+            border-color: #d4af37;
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.5);
+            color: #fff;
+        }
+
+        /* Three.js Canvas */
+        #threejs-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 2px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .footer-content {
+            color: #c0c0c0;
+            font-size: 1.1rem;
+        }
+
+        .footer-content a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-content a:hover {
+            color: #fff;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 3px solid rgba(212, 175, 55, 0.4);
+            border-radius: 50px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .theme-toggle span {
+            font-size: 1.8rem;
+            color: #d4af37;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .portrait-frame {
+                width: 280px;
+                height: 350px;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .theme-toggle {
+                right: 1rem;
+                padding: 1rem;
+            }
+
+            .social-links {
+                gap: 1.5rem;
+            }
+
+            .social-link {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .flipster-container {
+                height: 950px; /* Adjusted for mobile */
+                padding: 0 20px;
+            }
+
+            .flipster-item {
+                width: 380px; /* Adjusted for mobile */
+                height: 900px; /* Adjusted for mobile */
+                margin-left: -190px; /* Adjusted for new mobile width */
+                margin-top: -450px; /* Adjusted for new mobile height */
+            }
+
+            /* Mobile flipster adjustments */
+            /* These will also be controlled by GSAP */
+            .flipster-item.left-1 {
+                /* transform: translateX(-260px) translateZ(-140px) rotateY(35deg) scale(0.8) scaleX(-1); */
+            }
+
+            .flipster-item.left-2 {
+                /* transform: translateX(-435px) translateZ(-235px) rotateY(55deg) scale(0.65) scaleX(-1); */
+            }
+
+            .flipster-item.left-3 {
+                /* transform: translateX(-555px) translateZ(-330px) rotateY(70deg) scale(0.5) scaleX(-1); */
+            }
+
+            .flipster-item.right-1 {
+                /* transform: translateX(260px) translateZ(-140px) rotateY(-35deg) scale(0.8) scaleX(-1); */
+            }
+
+            .flipster-item.right-2 {
+                /* transform: translateX(435px) translateZ(-235px) rotateY(-55deg) scale(0.65) scaleX(-1); */
+            }
+
+            .flipster-item.right-3 {
+                /* transform: translateX(555px) translateZ(-330px) rotateY(-70deg) scale(0.5) scaleX(-1); */
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 1s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 1s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Magical Cursor Trail */
+        @keyframes trailFade {
+            0% { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: scale(0.3); 
+            }
+        }
+
+        /* Sparkle Animation */
+        @keyframes sparkleFloat {
+            0% { 
+                opacity: 1; 
+                transform: translateY(0px) scale(0.5); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-25px) scale(1.2); 
+            }
+        }
+
+        /* Additional magical effects */
+        .magical-glow {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Pulse Animation for Interactive Elements */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="marauders-map">
+            <div class="map-lines"></div>
+        </div>
+        <div class="loading-text">
+            <p>I solemnly swear I am up to no good...</p>
+            <p style="font-size: 1.1rem; margin-top: 15px;">Loading magical portfolio</p>
+        </div>
+    </div>
+
+    <!-- Three.js Canvas -->
+    <canvas id="threejs-canvas"></canvas>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle" title="Lumos / Nox">
+        <span>🌙</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#hero" class="logo">✨ Tarun Goel</a>
+            <ul class="nav-links">
+                <li><a href="#hero" onclick="scrollToSection('hero')">Home</a></li>
+                <li><a href="#about" onclick="scrollToSection('about')">The Prophecy</a></li>
+                <li><a href="#skills" onclick="scrollToSection('skills')">Arsenal</a></li>
+                <li><a href="#projects" onclick="scrollToSection('projects')">Creations</a></li>
+                <li><a href="#honors" onclick="scrollToSection('honors')">Honors</a></li>
+                <li><a href="#contact" onclick="scrollToSection('contact')">Owl Post</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="floating-elements">
+            <div class="floating-element" style="top: 20%; left: 10%;">⚡</div>
+            <div class="floating-element" style="top: 60%; right: 15%; animation-delay: 1s;">🔮</div>
+            <div class="floating-element" style="top: 80%; left: 20%; animation-delay: 2s;">✨</div>
+            <div class="floating-element" style="top: 30%; right: 30%; animation-delay: 0.5s;">🌟</div>
+            <div class="floating-element" style="top: 70%; left: 60%; animation-delay: 1.5s;">🦉</div>
+            <div class="floating-element" style="top: 40%; left: 80%; animation-delay: 3s;">🪄</div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title harry-potter-title">Tarun Goel</h1>
+            <h2 class="hero-subtitle harry-potter-heading">AI Spellcaster & Visionary of the Dark Arts</h2>
+            <p class="hero-description">
+                Weaving intelligent enchantments through code. Master of machine learning, NLP charms, and computer vision sorcery — conjuring real-time magic from pure logic and transforming data into digital divination.
+            </p>
+            <a href="#about" class="cta-button" onclick="scrollToSection('about')">Begin the Journey</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in harry-potter-title">The Prophecy</h2>
+            <div class="about-content">
+                <div class="portrait-frame slide-in-left"></div>
+                <div class="about-text slide-in-right">
+                    <h3 class="harry-potter-heading">Greetings, Fellow Adventurer!</h3>
+                    <p>
+                        Welcome to my magical realm of intelligent code and machine learning enchantments. I am a passionate developer 
+                        who believes that technology should be both functional and fascinating — a true blend of logic and magic. 
+                        With hands-on experience in crafting real-world AI and vision-based projects, I specialize in bringing data to life through code.
+                    </p>
+                    <p>
+                        My journey began in the hallowed halls of Computer Science, where I first casted my spells in Python and Java. 
+                        Since then, I've delved into the forbidden scrolls of machine learning, computer vision, and NLP, conjuring impactful 
+                        solutions using the likes of YOLOv5, TensorFlow, and Scikit-learn to enchant data with intelligence.
+                    </p>
+                    <p>
+                        When I'm not summoning models or enchanting interfaces, I wander the world of open-source magic, guide young wizards 
+                        through GitHub and Kaggle spellbooks, and continue to expand my spellcraft in the ever-evolving tech realm. 
+                        My mission is to bridge the gap between complex AI algorithms and real-world applications that make a difference.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in harry-potter-title">Magical Arsenal</h2>
+            <div class="flipster-container">
+                <div class="flipster-wrapper" id="skills-flipster">
+                    
+                    <div class="flipster-item">
+                        <div class="skill-scroll fade-in">
+                            <h3 class="skill-category harry-potter-subheading">⚡ Spellcasting Languages</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">Python</span>
+                                <span class="skill-item">Java</span>
+                                <span class="skill-item">JavaScript</span>
+                                <span class="skill-item">C++</span>
+                                <span class="skill-item">SQL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="skill-scroll fade-in">
+                            <h3 class="skill-category harry-potter-subheading">🧠 AI & Vision Enchantments</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">YOLOv5</span>
+                                <span class="skill-item">OpenCV</span>
+                                <span class="skill-item">TensorFlow</span>
+                                <span class="skill-item">Keras</span>
+                                <span class="skill-item">Scikit-learn</span>
+                                <span class="skill-item">NLP</span>
+                                <span class="skill-item">CNN</span>
+                                <span class="skill-item">RNN</span>
+                                <span class="skill-item">LSTM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="skill-scroll fade-in">
+                            <h3 class="skill-category harry-potter-subheading">🌐 Web Wizardry</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">Flask</span>
+                                <span class="skill-item">Django</span>
+                                <span class="skill-item">HTML5</span>
+                                <span class="skill-item">CSS3</span>
+                                <span class="skill-item">JavaScript</span>
+                                <span class="skill-item">React</span>
+                                <span class="skill-item">GitHub</span>
+                                <span class="skill-item">Figma</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="skill-scroll fade-in">
+                            <h3 class="skill-category harry-potter-subheading">⚙️ Hardware Charms</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">Arduino</span>
+                                <span class="skill-item">Bluetooth (HC-05)</span>
+                                <span class="skill-item">L298N Motor Driver</span>
+                                <span class="skill-item">Embedded Systems</span>
+                                <span class="skill-item">IoT</span>
+                                <span class="skill-item">Sensors</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in harry-potter-title">Magical Creations</h2>
+            <div class="flipster-container">
+                <div class="flipster-wrapper" id="projects-flipster">
+
+                    <div class="flipster-item">
+                        <div class="project-card fade-in">
+                            <h3 class="project-title harry-potter-subheading">🔍 The Pensieve of CommentLens</h3>
+                            <p class="project-description">
+                               CommentLens is an intelligent sentiment analysis platform built with Flask, NLP, and Scikit-learn. It retrieves real-time comments from YouTube and Reddit, analyzes user sentiment, filters spam and abusive content, and presents visual feedback to help creators understand audience emotions and engagement. The platform features advanced text preprocessing, machine learning classification models, and interactive dashboards for comprehensive sentiment insights.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Flask</span>
+                                <span class="tech-tag">NLP</span>
+                                <span class="tech-tag">Scikit-learn</span>
+                                <span class="tech-tag">YouTube API</span>
+                                <span class="tech-tag">Reddit API</span>
+                                <span class="tech-tag">Pandas</span>
+                                <span class="tech-tag">NumPy</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/TarunGoel93/CommentLens" class="project-link" target="_blank">Source Code</a>
+                                <a href="https://docs.google.com/document/d/1p5bXVIXuebBKyiRGwR0oi_7anZ-KzwBK/edit?usp=drive_link" class="project-link" target="_blank">Research Paper</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="project-card fade-in">
+                            <h3 class="project-title harry-potter-subheading">🎭 Festivalia: The Cultural Codex</h3>
+                            <p class="project-description">
+                                An interactive educational game designed in Figma to promote cultural awareness and diversity. Features festival-themed mini-games, immersive storytelling, and captivating visuals that enchant learners and families alike while teaching about global traditions and celebrations. The project includes comprehensive user research, wireframing, prototyping, and user testing phases to create an engaging cultural learning experience.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Figma</span>
+                                <span class="tech-tag">UI/UX Design</span>
+                                <span class="tech-tag">Interactive Design</span>
+                                <span class="tech-tag">Game Design</span>
+                                <span class="tech-tag">Cultural Research</span>
+                                <span class="tech-tag">Prototyping</span>
+                                <span class="tech-tag">User Testing</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.figma.com/design/Sm36vTD8MTRlBM39JH3AM3/Festivalia?node-id=0-1&p=f" class="project-link" target="_blank">Figma Design</a>
+                                <a href="https://drive.google.com/file/d/1eFX0cWM-zaMj2gaJKZ-35s7lfZliDkQW/view" class="project-link" target="_blank">Project Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="project-card fade-in">
+                            <h3 class="project-title harry-potter-subheading">🚗 The Marauder's Navigator</h3>
+                            <p class="project-description">
+                                A smart path-following robot that guides users through hospitals or campuses using destination-based navigation. Built using Arduino, C++, and HC-05 Bluetooth, avoiding expensive sensors with an innovative logic-based route system that provides cost-effective autonomous navigation. The robot features obstacle detection, real-time path planning, voice commands, and mobile app integration for seamless user interaction.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Arduino</span>
+                                <span class="tech-tag">C++</span>
+                                <span class="tech-tag">HC-05 Bluetooth</span>
+                                <span class="tech-tag">Embedded Systems</span>
+                                <span class="tech-tag">Robotics</span>
+                                <span class="tech-tag">Navigation</span>
+                                <span class="tech-tag">Mobile App</span>
+                                <span class="tech-tag">IoT</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Demo Video Soon</a>
+                                <a href="#" class="project-link">Documentation</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="project-card fade-in">
+                            <h3 class="project-title harry-potter-subheading">🎮 Three Charms in a Row</h3>
+                            <p class="project-description">
+                                A Harry Potter–themed Tic Tac Toe mobile game featuring custom wizard avatars, magical spell symbols, and multi-board support. Players can choose their house (Gryffindor, Slytherin, Hufflepuff, Ravenclaw) and duel friends in an enchanting twist on the classic game. Includes sound effects, animations, score tracking, and tournament mode for competitive gameplay.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">HTML-to-APK</span>
+                                <span class="tech-tag">Game Logic</span>
+                                <span class="tech-tag">Mobile Development</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://drive.google.com/uc?export=download&id=1MzmveNywK1T0XlWwMmsGbdEDkqvPuPyC" class="project-link">Download APK</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="project-card fade-in">
+                            <h3 class="project-title harry-potter-subheading">🧵 The Repository Rituals</h3>
+                            <p class="project-description">
+                                Conducted a comprehensive 2-day TechSphere workshop teaching young wizards the magical arts of Kaggle modeling and GitHub mastery. Helped participants build their first ML models, set up professional repositories, and showcase their magical coding powers to the tech community. The workshop covered version control, collaborative development, machine learning fundamentals, and portfolio building strategies.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">GitHub</span>
+                                <span class="tech-tag">Kaggle</span>
+                                <span class="tech-tag">Machine Learning</span>
+                                <span class="tech-tag">Mentorship</span>
+                                <span class="tech-tag">Workshop</span>
+                                <span class="tech-tag">Teaching</span>
+                                <span class="tech-tag">Portfolio Building</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://tarungoel93.github.io/Work/" class="project-link" target="_blank">View Workshop Website</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="project-card fade-in">
+                            <h3 class="project-title harry-potter-subheading">🖌️ The Apprentice's Art Scroll</h3>
+                            <p class="project-description">
+                                Designed and developed a personal portfolio website for a teenage freelance artist to showcase their artwork online. Built with HTML, CSS, and JavaScript, and hosted on GitHub Pages — offered as a free initiative to support young creative talent. The website features responsive design, image galleries, contact forms, and social media integration to help the artist establish their online presence.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">GitHub Pages</span>
+                                <span class="tech-tag">Responsive Design</span>
+                                <span class="tech-tag">Portfolio Design</span>
+                                <span class="tech-tag">Community Service</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://tarungoel93.github.io/KrishArts/" class="project-link" target="_blank">Visit Live Site</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="honors" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in harry-potter-title">🏆 Order of Merlin Honors</h2>
+            <div class="flipster-container">
+                <div class="flipster-wrapper" id="honors-flipster">
+
+                    <div class="flipster-item">
+                        <div class="honor-card fade-in">
+                            <h3 class="honor-title harry-potter-subheading">🏅 Triwizard Tech Champion</h3>
+                            <p class="honor-description">
+                                Led wizarding squads to victory in three prestigious real-world hackathons, crafting impactful AI and robotics solutions 
+                                under intense magical pressure. Demonstrated exceptional problem-solving skills and team leadership in competitive environments.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="honor-card fade-in">
+                            <h3 class="honor-title harry-potter-subheading">🧙‍♂️ Alliance with the Grandmasters of IIT Guwahati</h3>
+                            <p class="honor-description">
+                                Joined forces with a distinguished professor from IITG on the groundbreaking "Boli" speech recognition spellbook — 
+                                diving deep into the magical art of voice command processing and natural language understanding for regional languages.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="honor-card fade-in">
+                            <h3 class="honor-title harry-potter-subheading">💰 Gringotts Grant for the Marauder's Machine</h3>
+                            <p class="honor-description">
+                                Secured company funding to build an intelligent path-guiding robot for hospital navigation — a modern Marauder's Map on wheels to assist patients and visitors.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="honor-card fade-in">
+                            <h3 class="honor-title harry-potter-subheading">⚔️ Hack4Kaggle: The Wizard's Data Duel</h3>
+                            <p class="honor-description">
+                                Organized and hosted Hack4Kaggle, a custom machine learning hackathon on Kaggle. Brought together aspiring data wizards to solve real-world challenges, showcase models, and compete in a collaborative learning environment.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in harry-potter-title">🧙‍♂️ Spell Certifications</h2>
+            <div class="flipster-container">
+                <div class="flipster-wrapper" id="certs-flipster">
+
+                    <div class="flipster-item">
+                        <div class="cert-card parchment fade-in">
+                            <h3 class="cert-title harry-potter-subheading">🧪 HackerRank Software Intern Certificate</h3>
+                            <p style="color: #e0e0e0; margin-bottom: 1.5rem; font-size: 1.1rem;">
+                                Mastered advanced programming challenges and software development practices
+                            </p>
+                            <a href="https://github.com/TarunGoel93/TarunGoel93/blob/main/Software%20Intern.png" target="_blank" class="cert-link">View Credential</a>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="cert-card parchment fade-in">
+                            <h3 class="cert-title harry-potter-subheading">🎨 freeCodeCamp Responsive Web Design</h3>
+                            <p style="color: #e0e0e0; margin-bottom: 1.5rem; font-size: 1.1rem;">
+                                Completed comprehensive web design curriculum with modern CSS and HTML5
+                            </p>
+                            <a href="https://github.com/TarunGoel93/TarunGoel93/blob/main/Responsive%20Web%20Design.png" target="_blank" class="cert-link">View Credential</a>
+                        </div>
+                    </div>
+
+                    <div class="flipster-item">
+                        <div class="cert-card parchment fade-in">
+                            <h3 class="cert-title harry-potter-subheading">📜 Kaggle Community Host</h3>
+                            <p style="color: #e0e0e0; margin-bottom: 1.5rem; font-size: 1.1rem;">
+                                Recognized for outstanding contributions to the machine learning community
+                            </p>
+                            <a href="https://github.com/TarunGoel93/TarunGoel93/blob/main/K1.jpg" target="_blank" class="cert-link">View Credential</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section class="resume-section">
+        <div class="container">
+            <h2 class="section-title fade-in harry-potter-title">📜 Magical Credentials</h2>
+            <p class="fade-in" style="font-size: 1.4rem; margin-bottom: 3rem; color: #e0e0e0; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Download my enchanted resume to discover the full extent of my magical abilities, 
+                professional achievements, and spellcasting experience in the realm of software development and AI sorcery.
+            </p>
+            <a href="#" class="resume-button fade-in pulse-animation" onclick="downloadResume()">
+                <span class="resume-icon">📜</span>
+                <span>Download Magical Resume</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in harry-potter-title">🦉 Send an Owl</h2>
+            <div class="contact-form fade-in">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Magical Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your name, fellow wizard">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Owl Post Address</label>
+                        <input type="email" id="email" name="email" required placeholder="your.owl@hogwarts.edu">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Spell Subject</label>
+                        <input type="text" id="subject" name="subject" required placeholder="What magical collaboration awaits?">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Magical Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Share your magical ideas, project visions, or collaboration spells..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Magical Message ✨</button>
+                </form>
+            </div>
+            
+            <div class="social-links fade-in">
+                <a href="https://linkedin.com/in/tarun-goel" class="social-link" title="LinkedIn" target="_blank">💼</a>
+                <a href="https://github.com/TarunGoel93" class="social-link" title="GitHub" target="_blank">🐱</a>
+                <a href="https://twitter.com/tarun_goel93" class="social-link" title="Twitter" target="_blank">🐦</a>
+                <a href="mailto:goeltarun15@gmail.com" class="social-link" title="Email">✉️</a>
+                <a href="https://leetcode.com/u/ezCoder7/" class="social-link" title="Leetcode" target="_blank">🧑‍💻</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Global variables
+        let isDarkMode = true;
+        const flipsters = {
+            'skills-flipster': { currentIndex: 0, totalItems: 4 },
+            'projects-flipster': { currentIndex: 0, totalItems: 6 },
+            'honors-flipster': { currentIndex: 0, totalItems: 4 },
+            'certs-flipster': { currentIndex: 0, totalItems: 3 }
+        };
+
+        // Auto-rotation intervals
+        let autoRotationIntervals = {};
+
+        // Loading Screen Animation
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    initAnimations();
+                }, 1000);
+            }, 2500);
+        });
+
+        // 3D Flipster Carousel functionality
+        function flipsterSlide(flipserId, direction) {
+            console.log('flipsterSlide called:', flipserId, direction);
+            
+            const flipster = flipsters[flipserId];
+            const wrapper = document.getElementById(flipserId);
+            
+            if (!wrapper || !flipster) {
+                console.log('Wrapper or flipster not found:', flipserId);
+                return;
+            }
+
+            // Calculate new index
+            const maxIndex = flipster.totalItems - 1;
+            let newIndex = flipster.currentIndex + direction;
+            
+            // Loop around if we go beyond bounds
+            if (newIndex < 0) {
+                newIndex = maxIndex;
+            } else if (newIndex > maxIndex) {
+                newIndex = 0;
+            }
+            
+            flipster.currentIndex = newIndex;
+
+            // Update positions of all items
+            updateFlipsterPositions(wrapper, flipster.currentIndex);
+
+            // Add magical sparkle effect
+            createSparkleEffect(wrapper);
+        }
+
+        // Update flipster item positions using GSAP for smooth animation
+        function updateFlipsterPositions(wrapper, centerIndex) {
+            const items = wrapper.children;
+        
+            // Define the target properties for default (smaller) cards
+            const defaultPositionMap = {
+                'center': { x: 0, z: 0, rotationY: 0, scale: 1, scaleX: 1, opacity: 1, zIndex: 10 },
+                'left-1': { x: -380, z: -180, rotationY: 35, scale: 0.85, scaleX: -1, opacity: 0.8, zIndex: 8 },
+                'left-2': { x: -610, z: -295, rotationY: 55, scale: 0.7, scaleX: -1, opacity: 0.6, zIndex: 6 },
+                'left-3': { x: -790, z: -415, rotationY: 70, scale: 0.55, scaleX: -1, opacity: 0.4, zIndex: 4 },
+                'left-far': { x: -910, z: -530, rotationY: 80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
+                'right-1': { x: 380, z: -180, rotationY: -35, scale: 0.85, scaleX: -1, opacity: 0.8, zIndex: 8 },
+                'right-2': { x: 610, z: -295, rotationY: -55, scale: 0.7, scaleX: -1, opacity: 0.6, zIndex: 6 },
+                'right-3': { x: 790, z: -415, rotationY: -70, scale: 0.55, scaleX: -1, opacity: 0.4, zIndex: 4 },
+                'right-far': { x: 910, z: -530, rotationY: -80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
+            };
+
+            // Define the target properties for projects (larger) cards
+            const projectsPositionMap = {
+                'center': { x: 0, z: 0, rotationY: 0, scale: 1, scaleX: 1, opacity: 1, zIndex: 10 },
+                'left-1': { x: -480, z: -220, rotationY: 35, scale: 0.85, scaleX: -1, opacity: 0.8, zIndex: 8 },
+                'left-2': { x: -780, z: -360, rotationY: 55, scale: 0.7, scaleX: -1, opacity: 0.6, zIndex: 6 },
+                'left-3': { x: -1000, z: -500, rotationY: 70, scale: 0.55, scaleX: -1, opacity: 0.4, zIndex: 4 },
+                'left-far': { x: -1150, z: -600, rotationY: 80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
+                'right-1': { x: 480, z: -220, rotationY: -35, scale: 0.85, scaleX: -1, opacity: 0.8, zIndex: 8 },
+                'right-2': { x: 780, z: -360, rotationY: -55, scale: 0.7, scaleX: -1, opacity: 0.6, zIndex: 6 },
+                'right-3': { x: 1000, z: -500, rotationY: -70, scale: 0.55, scaleX: -1, opacity: 0.4, zIndex: 4 },
+                'right-far': { x: 1150, z: -600, rotationY: -80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
+            };
+
+            // Adjust for mobile responsiveness
+            const isMobile = window.innerWidth <= 768;
+            const mobileDefaultPositionMap = {
+                'center': { x: 0, z: 0, rotationY: 0, scale: 1, scaleX: 1, opacity: 1, zIndex: 10 },
+                'left-1': { x: -260, z: -140, rotationY: 35, scale: 0.8, scaleX: -1, opacity: 0.8, zIndex: 8 },
+                'left-2': { x: -435, z: -235, rotationY: 55, scale: 0.65, scaleX: -1, opacity: 0.6, zIndex: 6 },
+                'left-3': { x: -555, z: -330, rotationY: 70, scale: 0.5, scaleX: -1, opacity: 0.4, zIndex: 4 },
+                'left-far': { x: -615, z: -415, rotationY: 80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
+                'right-1': { x: 260, z: -140, rotationY: -35, scale: 0.8, scaleX: -1, opacity: 0.8, zIndex: 8 },
+                'right-2': { x: 435, z: -235, rotationY: -55, scale: 0.65, scaleX: -1, opacity: 0.6, zIndex: 6 },
+                'right-3': { x: 555, z: -330, rotationY: -70, scale: 0.5, scaleX: -1, opacity: 0.4, zIndex: 4 },
+                'right-far': { x: 615, z: -415, rotationY: -80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
+            };
+
+            const mobileProjectsPositionMap = {
+                'center': { x: 0, z: 0, rotationY: 0, scale: 1, scaleX: 1, opacity: 1, zIndex: 10 },
+                'left-1': { x: -320, z: -160, rotationY: 35, scale: 0.85, scaleX: -1, opacity: 0.8, zIndex: 8 },
+                'left-2': { x: -520, z: -260, rotationY: 55, scale: 0.7, scaleX: -1, opacity: 0.6, zIndex: 6 },
+                'left-3': { x: -670, z: -360, rotationY: 70, scale: 0.55, scaleX: -1, opacity: 0.4, zIndex: 4 },
+                'left-far': { x: -750, z: -450, rotationY: 80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
+                'right-1': { x: 320, z: -160, rotationY: -35, scale: 0.85, scaleX: -1, opacity: 0.8, zIndex: 8 },
+                'right-2': { x: 520, z: -260, rotationY: -55, scale: 0.7, scaleX: -1, opacity: 0.6, zIndex: 6 },
+                'right-3': { x: 670, z: -360, rotationY: -70, scale: 0.55, scaleX: -1, opacity: 0.4, zIndex: 4 },
+                'right-far': { x: 750, z: -450, rotationY: -80, scale: 0.4, scaleX: -1, opacity: 0.2, zIndex: 2 },
+            };
+
+            const currentPositionMap = (wrapper.id === 'projects-flipster') 
+                ? (isMobile ? mobileProjectsPositionMap : projectsPositionMap)
+                : (isMobile ? mobileDefaultPositionMap : defaultPositionMap);
+
+            // Disable pointer events on all items at the start of the animation
+            gsap.set(items, { pointerEvents: 'none' });
+
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                let position = i - centerIndex;
+
+                // Handle looping for positions beyond visible range
+                if (position > items.length / 2) {
+                    position -= items.length;
+                } else if (position < -items.length / 2) {
+                    position += items.length;
+                }
+                
+                let targetProps;
+                if (position === 0) {
+                    targetProps = currentPositionMap['center'];
+                } else if (position === -1) {
+                    targetProps = currentPositionMap['left-1'];
+                } else if (position === -2) {
+                    targetProps = currentPositionMap['left-2'];
+                } else if (position === -3) {
+                    targetProps = currentPositionMap['left-3'];
+                } else if (position <= -4) { // Group all further left items
+                    targetProps = currentPositionMap['left-far'];
+                } else if (position === 1) {
+                    targetProps = currentPositionMap['right-1'];
+                } else if (position === 2) {
+                    targetProps = currentPositionMap['right-2'];
+                } else if (position === 3) {
+                    targetProps = currentPositionMap['right-3'];
+                } else if (position >= 4) { // Group all further right items
+                    targetProps = currentPositionMap['right-far'];
+                }
+
+                // Animate using GSAP
+                gsap.to(item, {
+                    x: targetProps.x,
+                    z: targetProps.z,
+                    rotationY: targetProps.rotationY,
+                    scale: targetProps.scale,
+                    scaleX: targetProps.scaleX, // Apply mirror effect
+                    opacity: targetProps.opacity,
+                    zIndex: targetProps.zIndex, // GSAP can animate zIndex
+                    duration: 0.8, // Smooth animation duration
+                    ease: 'power2.out', // Easing function
+                    onComplete: () => {
+                        // Re-enable pointer events after the animation completes for all items
+                        // This will only run once for the last item to complete its animation
+                        if (i === items.length - 1) {
+                            gsap.set(items, { pointerEvents: 'auto' });
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize flipster positions and add click handlers
+        function initFlipsters() {
+            Object.keys(flipsters).forEach(flipserId => {
+                const wrapper = document.getElementById(flipserId);
+                if (wrapper) {
+                    updateFlipsterPositions(wrapper, 0);
+                    
+                    // Add click handlers to each flipster item
+                    const items = wrapper.children;
+                    for (let i = 0; i < items.length; i++) {
+                        const item = items[i];
+                        item.addEventListener('click', () => {
+                            const flipster = flipsters[flipserId];
+                            const targetIndex = i;
+                            const currentIndex = flipster.currentIndex;
+                            
+                            if (targetIndex !== currentIndex) {
+                                flipster.currentIndex = targetIndex;
+                                updateFlipsterPositions(wrapper, targetIndex);
+                                createSparkleEffect(item);
+                                
+                                // Restart auto-rotation for this flipster
+                                restartAutoRotation(flipserId);
+                            }
+                        });
+                    }
+                    
+                    // Start auto-rotation for this flipster
+                    startAutoRotation(flipserId);
+                }
+            });
+        }
+
+        // Start auto-rotation for a flipster
+        function startAutoRotation(flipserId) {
+            // Clear existing interval if any
+            if (autoRotationIntervals[flipserId]) {
+                clearInterval(autoRotationIntervals[flipserId]);
+            }
+            
+            // Start new interval
+            autoRotationIntervals[flipserId] = setInterval(() => {
+                flipsterSlide(flipserId, 1); // Move to next card
+            }, 5000); // 5 seconds
+        }
+
+        // Restart auto-rotation for a flipster
+        function restartAutoRotation(flipserId) {
+            startAutoRotation(flipserId);
+        }
+
+        // Create sparkle effect for cards
+        function createSparkleEffect(element) {
+            if (!element) return;
+            
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.textContent = '✨';
+                    sparkle.style.cssText = `
+                        position: absolute;
+                        font-size: 16px;
+                        color: #d4af37;
+                        pointer-events: none;
+                        animation: sparkleFloat 1.5s ease-out forwards;
+                        left: ${Math.random() * element.offsetWidth}px;
+                        top: ${Math.random() * element.offsetHeight}px;
+                        z-index: 1000;
+                    `;
+                    
+                    element.style.position = 'relative';
+                    element.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 1500);
+                }, i * 100);
+            }
+        }
+
+        // Smooth scrolling function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (isDarkMode) {
+                // Switch to light mode
+                body.style.background = 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 50%, #d0d0d0 100%)';
+                body.style.color = '#2d1b0e';
+                themeToggle.innerHTML = '<span>☀️</span>';
+                isDarkMode = false;
+            } else {
+                // Switch back to dark mode
+                body.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)';
+                body.style.color = '#d4af37';
+                themeToggle.innerHTML = '<span>🌙</span>';
+                isDarkMode = true;
+            }
+        }
+
+        // Resume download function
+        function downloadResume() {
+            // Create a magical effect
+            const button = event.target.closest('.resume-button');
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+                alert('✨ Resume download will be available soon! The magical document is being prepared...');
+            }, 150);
+        }
+
+        // Three.js Setup
+        function initThreeJS() {
+            const canvas = document.getElementById('threejs-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+
+            // Create floating magical elements
+            const particles = new THREE.Group();
+            const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+            const particleMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xd4af37, 
+                transparent: true, 
+                opacity: 0.6 
+            });
+
+            for (let i = 0; i < 80; i++) {
+                const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+                particle.position.set(
+                    (Math.random() - 0.5) * 60,
+                    (Math.random() - 0.5) * 60,
+                    (Math.random() - 0.5) * 60
+                );
+                particle.userData = {
+                    velocity: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.02,
+                        (Math.random() - 0.5) * 0.02,
+                        (Math.random() - 0.5) * 0.02
+                    )
+                };
+                particles.add(particle);
+            }
+
+            scene.add(particles);
+            camera.position.z = 30;
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Animate particles
+                particles.children.forEach(particle => {
+                    particle.position.add(particle.userData.velocity);
+                    particle.rotation.x += 0.01;
+                    particle.rotation.y += 0.01;
+
+                    // Bounce off boundaries
+                    if (Math.abs(particle.position.x) > 30) particle.userData.velocity.x *= -1;
+                    if (Math.abs(particle.position.y) > 30) particle.userData.velocity.y *= -1;
+                    if (Math.abs(particle.position.z) > 30) particle.userData.velocity.z *= -1;
+                });
+
+                particles.rotation.y += 0.001;
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // Initialize animations
+        function initAnimations() {
+            // Initialize Three.js
+            initThreeJS();
+
+            // Initialize flipsters
+            initFlipsters();
+
+            // Hero section animations
+            gsap.timeline()
+                .to('.hero-title', { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out' })
+                .to('.hero-subtitle', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=1')
+                .to('.hero-description', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.8')
+                .to('.cta-button', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6');
+
+            // Floating elements animation
+            gsap.to('.floating-element', {
+                y: '+=30',
+                duration: 3,
+                ease: 'power1.inOut',
+                repeat: -1,
+                yoyo: true,
+                stagger: 0.4
+            });
+
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animation elements
+            document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Enhanced hover animations for cards
+            document.querySelectorAll('.skill-scroll, .project-card, .honor-card, .cert-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, { 
+                        scale: 1.05, 
+                        rotationY: 2,
+                        duration: 0.4, 
+                        ease: 'power2.out' 
+                    });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, { 
+                        scale: 1, 
+                        rotationY: 0,
+                        duration: 0.4, 
+                        ease: 'power2.out' 
+                    });
+                });
+            });
+
+            // Form submission handler
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show magical success message
+                const button = document.querySelector('.submit-button');
+                const originalText = button.textContent;
+                button.textContent = 'Message Sent! ✨';
+                button.style.background = 'linear-gradient(45deg, #28a745, #34ce57)';
+                
+                // Create success sparkles
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.textContent = '✨';
+                        sparkle.style.cssText = `
+                            position: fixed;
+                            font-size: 20px;
+                            color: #d4af37;
+                            pointer-events: none;
+                            animation: sparkleFloat 2s ease-out forwards;
+                            left: ${Math.random() * window.innerWidth}px;
+                            top: ${Math.random() * window.innerHeight}px;
+                            z-index: 10000;
+                        `;
+                        
+                        document.body.appendChild(sparkle);
+                        setTimeout(() => sparkle.remove(), 2000);
+                    }, i * 200);
+                }
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(45deg, #d4af37, #f4d03f)';
+                    this.reset();
+                }, 4000);
+            });
+        }
+
+        // Enhanced parallax effect for hero section
+        let ticking = false;
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            const floatingElements = document.querySelectorAll('.floating-element');
+            
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+            
+            floatingElements.forEach((element, index) => {
+                const speed = 0.2 + (index * 0.05);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+            
+            ticking = false;
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        // Enhanced magical cursor trail effect
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.cssText = `
+                position: fixed;
+                width: 8px;
+                height: 8px;
+                background: radial-gradient(circle, #d4af37, transparent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                left: ${e.clientX - 4}px;
+                top: ${e.clientY - 4}px;
+                animation: trailFade 1.5s ease-out forwards;
+            `;
+            
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                trail.remove();
+            }, 1500);
+        });
+
+        // Enhanced magical sparkle effect for interactive elements
+        document.querySelectorAll('.cta-button, .resume-button, .project-link, .cert-link').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.textContent = '✨';
+                        sparkle.style.cssText = `
+                            position: absolute;
+                            font-size: 14px;
+                            color: #d4af37;
+                            pointer-events: none;
+                            animation: sparkleFloat 1.5s ease-out forwards;
+                            left: ${Math.random() * this.offsetWidth}px;
+                            top: ${Math.random() * this.offsetHeight}px;
+                            z-index: 100;
+                        `;
+                        
+                        this.style.position = 'relative';
+                        this.appendChild(sparkle);
+                        
+                        setTimeout(() => sparkle.remove(), 1500);
+                    }, i * 150);
+                }
+            });
+        });
+
+        // Theme toggle event listener
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'rgba(10, 10, 10, 0.95)';
+                navLinks.style.padding = '1rem';
+                navLinks.style.borderTop = '1px solid rgba(212, 175, 55, 0.3)';
+            });
+        }
+
+        // Add magical sound effects (optional)
+        function playMagicalSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.5);
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } catch (e) {
+                // Silently fail if audio context is not supported
+            }
+        }
+
+        // Add sound to magical interactions
+        document.querySelectorAll('.cta-button, .resume-button').forEach(button => {
+            button.addEventListener('click', () => {
+                playMagicalSound();
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Close mobile menu if open
+                if (navLinks && navLinks.style.display === 'flex') {
+                    navLinks.style.display = 'none';
+                }
+            }
+        });
+
+        // Enhanced scroll event listener
+        window.addEventListener('scroll', requestTick);
+
+        // Pause auto-rotation when page is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Pause all auto-rotations
+                Object.keys(autoRotationIntervals).forEach(flipserId => {
+                    if (autoRotationIntervals[flipserId]) {
+                        clearInterval(autoRotationIntervals[flipserId]);
+                    }
+                });
+            } else {
+                // Resume all auto-rotations
+                Object.keys(flipsters).forEach(flipserId => {
+                    startAutoRotation(flipserId);
+                });
+            }
+        });
+
+        // Console easter egg
+        console.log(`
+        🧙‍♂️ Welcome to Tarun's Magical Portfolio! 🧙‍♂️
+        
+        ✨ You've discovered the developer console! ✨
+        
+        If you're seeing this, you might be a fellow wizard of code.
+        Feel free to explore the magical spells (JavaScript) that power this portfolio.
+        
+        🎮 Click on any card to make it the center focus!
+        🎨 Click the theme toggle to switch between Lumos and Nox modes!
+        ⏰ Cards automatically rotate every 5 seconds!
+        
+        May your code be bug-free and your deployments successful! 🚀
+        
+        - Tarun Goel, AI Spellcaster
+        `);
+    </script>
+</body>
+</html>
